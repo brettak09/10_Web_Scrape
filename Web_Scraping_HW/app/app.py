@@ -102,12 +102,23 @@ def scrape():
     payload['weather'] = weather
 
     ##pandas
-    read = pd.read_html("http://space-facts.com/mars/")
-    df = read[0]
-    df = read[0]
-    html_table = df.to_html()
-    html_table = html_table.replace('\n', '')
-    payload['html_table'] = html_table
+
+
+    mars_facts_url = 'https://space-facts.com/mars/'
+    table_df = pd.read_html(mars_facts_url)[0]
+    table_df.columns = ["description", "value"]
+    table_df = table_df.set_index('description', drop=True)
+    payload["table"] = table_df.to_html()
+    # read = pd.read_html("http://space-facts.com/mars/")
+    # #df = read[0] duplicate line
+    # df = read[0]
+    # #render_template('index.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
+    # html_table = df.to_html()
+    # html_table = html_table.replace('\n', '')
+    # for table in html_table:
+    #     titles[loop.index]
+    #     table
+    # payload['html_table'] = html_table 
     
     # Scrape 4 different hemisphere images and their titles
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
