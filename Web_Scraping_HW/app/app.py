@@ -23,7 +23,7 @@ def index():
 def scrape():
     mars = mongo.db.mars
 
-    # start an empty dictionary to hold all data
+    # empty dictionary to hold all data
     payload = {}
 
     url = 'https://mars.nasa.gov/news'
@@ -31,7 +31,7 @@ def scrape():
     
     browser = Browser('chrome', **ex_path, headless=False)
 
-    # URL of page to be scraped
+    # URL of page 
     url = 'https://mars.nasa.gov/news'
 
     # ### Latest Mars News
@@ -44,20 +44,20 @@ def scrape():
     # Parse 
     url_scraper = bs(url_html, 'html.parser')
 
-    # Find the container that holds the value that we want, and specify the class so that it's specific
+    # title
     title_element = url_scraper.find('div', {'class': 'content_title'}).findChild()
 
     title_text = title_element.get_text()
     payload['title_text'] = title_text
 
-    # Find the paragraph (teaser)
+    # Paragraph
     body_element = url_scraper.find('div', {'class': 'article_teaser_body'})
 
     body_text = body_element.get_text()
     payload['body_text'] = body_text
     
     # ### Mars Images
-    # Visit the Browser and capture the html of that particular page
+    #  html of that particular page
     images_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 
     browser.visit(images_url)
@@ -106,7 +106,7 @@ def scrape():
     html_table = html_table.replace('\n', '')
     payload['html_table'] = html_table
     
-    # Scrape 4 different hemisphere images and their titles
+    # Scrape 4 different hemisphere images 
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     
 
@@ -120,7 +120,7 @@ def scrape():
         
     hs_image_data = []    
 
-    # for loop through m_urls list and perform some web scraping logic for each link
+    # for loop through m_urls 
     for url in m_urls:
         print(url)
         # DO ALL SCRAPING LOGIC HERE
@@ -131,7 +131,7 @@ def scrape():
         browser.visit(url)
         
         # scrape the title and image url
-        # Scrape the image from the img element
+        # Scrape the image 
         m_html = browser.html
 
         m_scraper = bs(m_html, 'html.parser')
@@ -141,7 +141,7 @@ def scrape():
         # add title to album
         album['title'] = m_title
         
-        # repeat scraping and extracting steps for image src
+        # repeat scraping 
         m_image_href = m_scraper.find('div', {'class': 'downloads'}).find('a').get('href')
         album['link'] = m_image_href
         
