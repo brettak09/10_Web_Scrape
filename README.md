@@ -13,3 +13,17 @@ Use python webscraping tools an interactive website was created.  A button begin
 Several sites were looped through, and data gathered from the sites can now be found on a newly created website.
 
 ### Technology Used
+
+- Bootstrap
+- Jupyter Notebook
+- Python
+- MongoDB
+- Flask
+- HTML
+
+### Modules
+
+- Splinter
+- Beautiful Soup
+- Requests
+- Pandas
